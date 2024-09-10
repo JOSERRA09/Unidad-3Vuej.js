@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicacion</title>
+    <link rel="stylesheet" href="style.css">  </head>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="movil">
+ 
+    <h2>Click: {{ clickContador }}
+
+    </h2>
+
+    <button @click="incrementarClick">Haz clic aquí
+
+    </button>
+
+    <hr>
+
+    <h2>Hola
+
+    </h2>
+    <input type="text" v-model="nombrecompleto" placeholder="Escribe tu nombre completo">
+   
+    <p>Bienvenido: {{ nombrecompleto }}
+
+    </p>
+
+    <hr>
+
+    <h2>Suma</h2>
+    <input type="number" v-model.number="num1" placeholder="Núm1">
+
+    <input type="number" v-model.number="num2" placeholder="Núm2">
+
+    <button @click="sumarNumeros">Sumar
+
+
+    </button>
+
+
+    <p>El Resultado es: {{ resultadoSuma }}
+
+    </p>
+</div>
+
+<script>
+
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                clickContador: 0,
+                nombrecompleto: '',
+                num1: 0,
+                num2: 0,
+                resultadoSuma: 0
+            }
+        },
+        methods: {
+            incrementarClick() {
+                
+                this.clickContador++;
+            },
+            sumarNumeros() {
+
+                this.resultadoSuma = this.num1 + this.num2;
+            }
+        }
+    }).mount('#movil');
+</script>
+
+</body>
+</html>

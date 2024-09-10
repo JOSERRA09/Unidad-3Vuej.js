@@ -1,0 +1,21 @@
+
+  #movil {
+    text-align: center; 
+    padding: 20px;
+    color: rgb(255, 249, 249);
+  }
+
+
+  body{
+    background-color: rgb(0, 17, 255);
+  }
+  
+   button {
+    background-color: #000000;
+    color: rgb(217, 255, 0);
+    padding: 15px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
