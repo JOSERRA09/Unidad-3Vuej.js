@@ -9,6 +9,7 @@
 </head>
 <body>
 
+
 <div id="movil">
  
     <h2>Click: {{ clickContador }}
@@ -43,9 +44,32 @@
     </button>
 
 
-    <p>El Resultado es: {{ resultadoSuma }}
+    <p>El Resultado es: {{ resultadoOperacion }}
 
     </p>
+
+    <hr>
+
+
+    <h2>Resultado
+
+    </h2>
+
+    <ul>
+
+        <li v-for="item in lista" :key="item">{{ item }}
+       
+
+        </li>
+    </ul>
+    <input type="text" v-model="LOL" placeholder="Name y Rol">
+    
+
+
+    <button @click="añadirElemento">Save
+
+    </button>
+
 </div>
 
 <script>
@@ -55,25 +79,49 @@
     createApp({
         data() {
             return {
+
                 clickContador: 0,
+
                 nombrecompleto: '',
+
                 num1: 0,
+
                 num2: 0,
-                resultadoSuma: 0
+
+                resultadoOperacion: 0,
+
+                lista: [], 
+
+                LOL: '' 
+
+           
             }
         },
         methods: {
             incrementarClick() {
-                
+
                 this.clickContador++;
             },
-            sumarNumeros() {
 
-                this.resultadoSuma = this.num1 + this.num2;
+            sumarNumeros() {
+                this.resultadoOperacion = this.num1 + this.num2;
+            },
+            
+            añadirElemento() {
+
+                if (this.LOL.trim() !== '') {
+
+                    this.lista.push(this.LOL.trim());
+
+                    this.LOL = '';
+                }
             }
         }
     }).mount('#movil');
+   
 </script>
 
 </body>
 </html>
+
+
