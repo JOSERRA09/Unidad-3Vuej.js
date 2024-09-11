@@ -3,77 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applicacion</title>
-    <link rel="stylesheet" href="style.css">  </head>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Aplicación</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Cambia a la versión de producción de Vue -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
 <body>
 
-
 <div id="movil">
- 
-    <h2>Click: {{ clickContador }}
 
-    </h2>
-
-    <button @click="incrementarClick">Haz clic aquí
-
-    </button>
+    <h2>Click: {{ clickContador }}</h2>
+    <button @click="incrementarClick">Haz clic aquí</button>
 
     <hr>
 
-    <h2>Hola
-
-    </h2>
+    <h2>Hola</h2>
     <input type="text" v-model="nombrecompleto" placeholder="Escribe tu nombre completo">
-   
-    <p>Bienvenido: {{ nombrecompleto }}
-
-    </p>
+    <p>Bienvenido: {{ nombrecompleto }}</p>
 
     <hr>
 
     <h2>Suma</h2>
     <input type="number" v-model.number="num1" placeholder="Núm1">
-
     <input type="number" v-model.number="num2" placeholder="Núm2">
-
-    <button @click="sumarNumeros">Sumar
-
-
-    </button>
-
-
-    <p>El Resultado es: {{ resultadoOperacion }}
-
-    </p>
+    <button @click="sumarNumeros">Sumar</button>
+    <p>El Resultado es: {{ resultadoSuma }}</p>
 
     <hr>
 
-
-    <h2>Resultado
-
-    </h2>
-
+    <h2>Resultado</h2>
     <ul>
+        <li v-for="(persona, index) in lista" :key="index">
 
-        <li v-for="item in lista" :key="item">{{ item }}
-       
-
+            Nombre: {{ persona.nombre }}, Rol: {{ persona.rol }}
+        
         </li>
+   
     </ul>
-    <input type="text" v-model="LOL" placeholder="Name y Rol">
+
     
+    <input type="text" v-model="Nnombre" placeholder="Nombre">
 
+    <input type="text" v-model="NRol" placeholder="Rol">
 
-    <button @click="añadirElemento">Save
-
-    </button>
+    <button @click="agregarPersona">SAVE</button>
 
 </div>
 
 <script>
-
     const { createApp } = Vue;
 
     createApp({
@@ -88,40 +65,42 @@
 
                 num2: 0,
 
-                resultadoOperacion: 0,
+                resultadoSuma: 0,
 
                 lista: [], 
 
-                LOL: '' 
-
-           
+                Nnombre: '', 
+                
+                NRol: '' 
             }
         },
         methods: {
             incrementarClick() {
-
                 this.clickContador++;
             },
-
             sumarNumeros() {
-                this.resultadoOperacion = this.num1 + this.num2;
+                this.resultadoSuma = this.num1 + this.num2;
             },
-            
-            añadirElemento() {
+            agregarPersona() {
 
-                if (this.LOL.trim() !== '') {
+                if (this.Nnombre !== '' && this.NRol !== '') {
 
-                    this.lista.push(this.LOL.trim());
+                    this.lista.push({
 
-                    this.LOL = '';
+                        nombre: this.Nnombre,
+
+                        rol: this.NRol
+
+                    });
+
+                    this.Nnombre = ''; 
+
+                    this.NRol = ''; 
                 }
             }
         }
     }).mount('#movil');
-   
 </script>
 
 </body>
 </html>
-
-
