@@ -5,34 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplicación</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Cambia a la versión de producción de Vue -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
 <body>
 
 <div id="movil">
 
-    <h2>Click: {{ clickContador }}</h2>
-    <button @click="incrementarClick">Haz clic aquí</button>
+    
+
+    <h2>
+        WERLCOME A  
+       
+
+    </h2>
+
+
+
+    <img src="RS.png" alt=" img" width="150" height="150"  >
+   
+
+
+    <h2>
+        Click: {{ clickContador }}
+
+
+    </h2>
+
+
+    <button 
+    
+    @click="incrementarClick">
+    
+    Haz clic aquí
+
+
+    </button>
+
+    
 
     <hr>
 
-    <h2>Hola</h2>
+
+ <img src="Stars.png" alt=" imagen" width="50" height="50">
+    
+ 
+ 
+    <h2>
+        Hola Humano
+
+    </h2>
+
+   
+
+
     <input type="text" v-model="nombrecompleto" placeholder="Escribe tu nombre completo">
-    <p>Bienvenido: {{ nombrecompleto }}</p>
+    
+    <p>
+        Bienvenido a raccoon city: {{ nombrecompleto }}
+
+    </p>
 
     <hr>
 
-    <h2>Suma</h2>
+    <img src="Simbolo.png" alt=" imagen" width="50" height="50">
+
+    <h2>
+        Suma
+
+    </h2>
+
+  
+
+
+
     <input type="number" v-model.number="num1" placeholder="Núm1">
+
     <input type="number" v-model.number="num2" placeholder="Núm2">
+
     <button @click="sumarNumeros">Sumar</button>
-    <p>El Resultado es: {{ resultadoSuma }}</p>
+
+
+    <p>
+        El Resultado es: {{ resultadoSuma }}
+
+    </p>
 
     <hr>
 
-    <h2>Resultado</h2>
+    
+    <img src="R.P.D.png" alt=" imagen" width="50" height="50"  >
+   
+    <h2>
+        Resultado
+
+    </h2>
     <ul>
+
         <li v-for="(persona, index) in lista" :key="index">
 
             Nombre: {{ persona.nombre }}, Rol: {{ persona.rol }}
