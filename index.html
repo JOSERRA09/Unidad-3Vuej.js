@@ -10,165 +10,135 @@
 <body>
 
 <div id="movil">
+    <h1>WELCOME A</h1>
+    <img src="RS.png" alt="img" width="150" height="150">
 
-    
+    <form @submit.prevent="login">
+        <input type="text" v-model="username" placeholder="Usuario" required>
+        <input type="password" v-model="password" placeholder="Contraseña" required>
+        <button type="submit">SKIP</button>
+    </form>
 
-    <h2>
-        WERLCOME A  
-       
+    <p v-if="error">{{ error }}</p>
 
-    </h2>
-
-
-
-    <img src="RS.png" alt=" img" width="150" height="150"  >
-   
-
-
-    <h2>
-        Click: {{ clickContador }}
-
-
-    </h2>
-
-
-    <button 
-    
-    @click="incrementarClick">
-    
-    Haz clic aquí
-
-
-    </button>
-
-    
-
-    <hr>
-
-
- <img src="Stars.png" alt=" imagen" width="50" height="50">
-    
- 
- 
-    <h2>
-        Hola Humano
-
-    </h2>
-
-   
-
-
-    <input type="text" v-model="nombrecompleto" placeholder="Escribe tu nombre completo">
-    
-    <p>
-        Bienvenido a raccoon city: {{ nombrecompleto }}
-
-    </p>
-
-    <hr>
-
-    <img src="Simbolo.png" alt=" imagen" width="50" height="50">
-
-    <h2>
-        Suma
-
-    </h2>
-
-  
-
-
-
-    <input type="number" v-model.number="num1" placeholder="Núm1">
-
-    <input type="number" v-model.number="num2" placeholder="Núm2">
-
-    <button @click="sumarNumeros">Sumar</button>
-
-
-    <p>
-        El Resultado es: {{ resultadoSuma }}
-
-    </p>
-
-    <hr>
-
-    
-    <img src="R.P.D.png" alt=" imagen" width="50" height="50"  >
-   
-    <h2>
-        Resultado
-
-    </h2>
-    <ul>
-
-        <li v-for="(persona, index) in lista" :key="index">
-
-            Nombre: {{ persona.nombre }}, Rol: {{ persona.rol }}
+    <div v-if="isLoggedIn">
         
-        </li>
-   
-    </ul>
+        <h2>USUARIOS</h2>
+        <img src="Stars.png" alt="img" width="150" height="150">
+        
+        <img src="R.P.D.png" alt="img" width="150" height="150">
 
-    
-    <input type="text" v-model="Nnombre" placeholder="Nombre">
+        <img src="Simbolo.png" alt="img" width="150" height="150">
+        
+        
+        <table>
+            
+            <thead>
+               
+                <tr>
+                    <th>Usuario</th>
+                    <th>Contraseña</th>
+                    <th>Contacto</th>
+                    <th>Compañía</th>
+                    <th>Dirección</th>
+                    <th>Suite</th>
+                    <th>Calle</th>
+                    <th>Ciudad</th>
+              
+                    
+                </tr>
+            
+           
+            </thead>
+            
+           
+            <tbody>
 
-    <input type="text" v-model="NRol" placeholder="Rol">
-
-    <button @click="agregarPersona">SAVE</button>
+                <tr v-for="user in users" :key="user.username">
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.password }}</td>
+                    <td>{{ user.Contacto }}</td>
+                    <td>{{ user.compañia }}</td>
+                    <td>{{ user.direccion }}</td>
+                    <td>{{ user.suite }}</td>
+                    <td>{{ user.calle }}</td>
+                    <td>{{ user.ciudad }}</td>
+                
+                </tr>
+           
+            </tbody>
+       
+        </table>
+  
+    </div>
 
 </div>
 
 <script>
-    const { createApp } = Vue;
-
-    createApp({
+    const app = Vue.createApp({
         data() {
             return {
-
-                clickContador: 0,
-
-                nombrecompleto: '',
-
-                num1: 0,
-
-                num2: 0,
-
-                resultadoSuma: 0,
-
-                lista: [], 
-
-                Nnombre: '', 
-                
-                NRol: '' 
-            }
+                username: '',
+                password: '',
+                error: '',
+                users: [],
+                isLoggedIn: false
+            };
         },
         methods: {
-            incrementarClick() {
-                this.clickContador++;
-            },
-            sumarNumeros() {
-                this.resultadoSuma = this.num1 + this.num2;
-            },
-            agregarPersona() {
+            async login() {
+                try {
+                    const response = await fetch('usuarios.json');
+                    const users = await response.json();
 
-                if (this.Nnombre !== '' && this.NRol !== '') {
+                    const user = users.find(user => 
+                        user.username === this.username && user.password === this.password
+                    );
 
-                    this.lista.push({
-
-                        nombre: this.Nnombre,
-
-                        rol: this.NRol
-
-                    });
-
-                    this.Nnombre = ''; 
-
-                    this.NRol = ''; 
+                    if (user) {
+                        sessionStorage.setItem('loggedUser', JSON.stringify(user));
+                        this.users = users; 
+                        this.isLoggedIn = true; 
+                        this.error = '';
+                        alert('BIENVENIDO A RACCON CITY');
+                    } else {
+                        this.error = 'INCORRECTO';
+                    }
+                } catch (err) {
+                    console.error('ERROR NO CARGA USUARIO:', err);
+                    this.error = 'Error al acceder al sistema';
                 }
             }
+        },
+        mounted() {
+
+            const loggedUser = sessionStorage.getItem('loggedUser');
+            if (loggedUser) {
+                this.isLoggedIn = true;
+                this.users = JSON.parse(loggedUser);
+            }
         }
-    }).mount('#movil');
+    });
+
+    app.mount('#movil');
 </script>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        border: 1px solid #000000;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #000000;
+    }
+</style>
 
 </body>
 </html>
+

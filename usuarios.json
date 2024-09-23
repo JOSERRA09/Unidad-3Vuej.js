@@ -1,0 +1,12 @@
+[
+    { "username": "LEON", "password": "MATILDA", "Contacto": "LEON@gmail.com","direccion":"RACCON CITY","suite":"303","calle":"RACCON CITY POLICE DEPARTAMENT", "ciudad":"RACCON CITY","compañia":"R.P.D"},
+    { "username": "CLAIRE", "password": "AKM", "Contacto": "CLARIE@hotmal.com" ,"direccion":"CITY HALL","suite":"105","calle":"RACCON CITY POLICE DEPARTAMENT", "ciudad":"RACCON CITY","compañia":"R.P.D"},
+    { "username": "JILL", "password": "STARS", "Contacto": "JILL@outlook.com" ,"direccion":"JACK BAR","suite":"201","calle":"RACON CITY HALL", "ciudad":"RACON CITY","compañia":"S-T-A-R-S"},
+    { "username": "CHRIS", "password": "UMBRELLA", "Contacto":"CRHIS@gmail.com" ,"direccion":"RACCON CITY HALL","suite":"401","calle":"WASTLE FACTORY", "ciudad":"RACCON CTY","compañia":"S.T.A.R.S"},
+    { "username": "KRAUSER", "password": "NOVATO", "Contacto":"KRAUSER@gmail.com" ,"direccion":"Resident Evil Outbreak;","suite":"603","calle":"SUBSTATION", "ciudad":"RACCON CITY","compañia":"ILUMINDADOS"},
+    { "username": "ASHLEY", "password": "LEON", "Contacto":"ASHELY@hotmail.com" ,"direccion":"BOND SL","suite":"701","calle":"WASTLE FACOTY", "ciudad":"RACCON CITY","compañia":"R.P.D"},
+    { "username": "ADA", "password": "vernos", "Contacto":"ADA@outlook.com" ,"direccion":"FRENCH SL","suite":"801","calle":"KENDO CON SHOP", "ciudad":"RACCON CITY","compañia":"UMBRELLA"}
+
+
+
+]
