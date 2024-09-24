@@ -21,7 +21,7 @@
 
     <p v-if="error">{{ error }}</p>
 
-    <div v-if="isLoggedIn">
+    <div v-if="myLogin">
         
         <h2>USUARIOS</h2>
         <img src="Stars.png" alt="img" width="150" height="150">
@@ -122,7 +122,7 @@
 
                     </td>
                     <td>
-                        <button @click="Eliminarusuario(index)">Eliminar</button> 
+                        <button @click="removeUser(index)">Eliminar</button> 
                     </td>
                 </tr>
 
@@ -142,49 +142,49 @@
                 password: '',
                 error: '',
                 users: [],
-                isLoggedIn: false
+                myLogin: false
             };
         },
         methods: {
             async login() {
-                try {
-                    const response = await fetch('usuarios.json');
-                    const users = await response.json();
+    try {
+        const response = await fetch('usuarios.json');
+        const userList = await response.json();
 
-                    const user = users.find(user => 
-                        user.username === this.username && user.password === this.password
-                    );
+        const foundUser = userList.find(singleUser => 
+            singleUser.username === this.username && singleUser.password === this.password
+        );
 
+        if (foundUser) {
+            sessionStorage.setItem('loggedUser', JSON.stringify(foundUser));
+            this.users = userList; 
+            this.myLogin = true; 
+            this.error = '';
+            alert('BIENVENIDO A RACCON CITY');
+        } else {
+            this.error = 'INCORRECTO';
+        }
+    } catch (error) {
+        console.error('ERROR NO CARGA USUARIO:', error);
+        this.error = 'NO CARGA EL SISTEMA';
+    }
+},
 
-                    if (user) {
+removeUser(index) {
+    this.users.splice(index, 1); 
+},
 
-                        sessionStorage.setItem('loggedUser', JSON.stringify(user));
-                        this.users = users; 
-                        this.isLoggedIn = true; 
-                        this.error = '';
-                        alert('BIENVENIDO A RACCON CITY');
-                    } else {
-                        this.error = 'INCORRECTO';
-                    }
-                } catch (err) {
-                    console.error('ERROR NO CARGA USUARIO:', err);
+mounted() {
+    const storedUser = sessionStorage.getItem('loggedUser');
+    if (storedUser) {
+        this.myLogin = true;
+        this.users = JSON.parse(storedUser);
+    }
+}
 
-                    this.error = 'NO CARGA EL SISTEMA';
-                }
-            },
-
-            deleteUser(index) {
-                this.users.splice(index, 1); 
-            }
-        },
-        mounted() {
-            const loggedUser = sessionStorage.getItem('loggedUser');
-            if (loggedUser) {
-                this.isLoggedIn = true;
-                this.users = JSON.parse(loggedUser);
             }
         }
-    });
+    );
 
     app.mount('#movil');
 </script>
