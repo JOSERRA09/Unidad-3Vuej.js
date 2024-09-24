@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -30,44 +30,104 @@
 
         <img src="Simbolo.png" alt="img" width="150" height="150">
         
-        
         <table>
-            
             <thead>
-               
                 <tr>
-                    <th>Usuario</th>
-                    <th>Contraseña</th>
-                    <th>Contacto</th>
-                    <th>Compañía</th>
-                    <th>Dirección</th>
-                    <th>Suite</th>
-                    <th>Calle</th>
-                    <th>Ciudad</th>
-              
-                    
+                    <th>
+                        Usuario
+
+                    </th>
+
+                    <th>
+                        Contraseña
+
+                    </th>
+
+                    <th>
+                        Contacto
+
+                    </th>
+
+                    <th>
+                        Compañia
+
+                    </th>
+
+                    <th>
+                        Dirección
+
+                    </th>
+
+                    <th>
+                        Suite
+
+                    </th>
+
+                    <th>
+                        Calle
+
+                    </th>
+
+                    <th>
+                        Ciudad
+
+                    </th>
+
+                    <th>
+                        Acciones
+
+                    </th>
                 </tr>
-            
-           
+
             </thead>
-            
-           
+
             <tbody>
 
-                <tr v-for="user in users" :key="user.username">
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.password }}</td>
-                    <td>{{ user.Contacto }}</td>
-                    <td>{{ user.compañia }}</td>
-                    <td>{{ user.direccion }}</td>
-                    <td>{{ user.suite }}</td>
-                    <td>{{ user.calle }}</td>
-                    <td>{{ user.ciudad }}</td>
-                
+                <tr v-for="(user, index) in users" :key="user.username">
+                    <td>
+                        {{ user.username }}
+
+                    </td>
+                    <td>
+                        {{ user.password }}
+
+                    </td>
+
+                    <td>
+                        {{ user.Contacto }}
+
+                    </td>
+
+                    <td>
+                        {{ user.compañia }}
+
+                    </td>
+
+                    <td>{{ user.direccion }}
+
+                    </td>
+
+                    <td>
+                        {{ user.suite }}
+
+                    </td>
+
+                    <td>
+                        {{ user.calle }}
+
+                    </td>
+
+                    <td>
+                        {{ user.ciudad }}
+
+                    </td>
+                    <td>
+                        <button @click="Eliminarusuario(index)">Eliminar</button> 
+                    </td>
                 </tr>
-           
+
             </tbody>
-       
+
         </table>
   
     </div>
@@ -95,7 +155,9 @@
                         user.username === this.username && user.password === this.password
                     );
 
+
                     if (user) {
+
                         sessionStorage.setItem('loggedUser', JSON.stringify(user));
                         this.users = users; 
                         this.isLoggedIn = true; 
@@ -106,12 +168,16 @@
                     }
                 } catch (err) {
                     console.error('ERROR NO CARGA USUARIO:', err);
-                    this.error = 'Error al acceder al sistema';
+
+                    this.error = 'NO CARGA EL SISTEMA';
                 }
+            },
+
+            deleteUser(index) {
+                this.users.splice(index, 1); 
             }
         },
         mounted() {
-
             const loggedUser = sessionStorage.getItem('loggedUser');
             if (loggedUser) {
                 this.isLoggedIn = true;
@@ -141,4 +207,3 @@
 
 </body>
 </html>
-
