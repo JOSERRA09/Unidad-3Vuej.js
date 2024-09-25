@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -22,175 +22,266 @@
     <p v-if="error">{{ error }}</p>
 
     <div v-if="myLogin">
-        
         <h2>USUARIOS</h2>
         <img src="Stars.png" alt="img" width="150" height="150">
-        
+
         <img src="R.P.D.png" alt="img" width="150" height="150">
-
-        <img src="Simbolo.png" alt="img" width="150" height="150">
         
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        Usuario
+        <img src="Simbolo.png" alt="img" width="150" height="150">
 
-                    </th>
+        <img src="Iluminados.png" alt="img" width="150" height="150">
 
-                    <th>
-                        Contraseña
 
-                    </th>
+        <div class="button-container">
 
-                    <th>
-                        Contacto
+            <button @click="showAddUserForm = true">Agregar Nuevo Usuario</button>
 
-                    </th>
 
-                    <th>
-                        Compañia
+            <button @click="showUserTable = !showUserTable">{{ showUserTable ? 'Ocultar Formulario' : 'Mostrar Formulario' }}</button>
+ 
+        </div>
 
-                    </th>
+        <div v-if="showAddUserForm">
 
-                    <th>
-                        Dirección
+            <h3>Agregar Usuario</h3>
 
-                    </th>
+            <form @submit.prevent="addUser">
 
-                    <th>
-                        Suite
+                <input type="text" v-model="newUser.username" placeholder="Usuario" required>
 
-                    </th>
+                <input type="password" v-model="newUser.password" placeholder="Contraseña" required>
 
-                    <th>
-                        Calle
+                <input type="text" v-model="newUser.Contacto" placeholder="Contacto" required>
 
-                    </th>
+                <input type="text" v-model="newUser.compañia" placeholder="Compañía" required>
 
-                    <th>
-                        Ciudad
+                <input type="text" v-model="newUser.direccion" placeholder="Dirección" required>
 
-                    </th>
+                <input type="text" v-model="newUser.suite" placeholder="Suite" required>
 
-                    <th>
-                        Acciones
+                <input type="text" v-model="newUser.calle" placeholder="Calle" required>
 
-                    </th>
-                </tr>
+                <input type="text" v-model="newUser.ciudad" placeholder="Ciudad" required>
 
-            </thead>
+                <button type="submit">Guardar</button>
 
-            <tbody>
+                <button @click="cancelAddUser">Cancelar</button>
+            </form>
+        </div>
 
-                <tr v-for="(user, index) in users" :key="user.username">
-                    <td>
-                        {{ user.username }}
+        <div v-if="showUserTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Usuario
 
-                    </td>
-                    <td>
-                        {{ user.password }}
+                        </th>
 
-                    </td>
+                        <th>
+                            Contraseña
 
-                    <td>
-                        {{ user.Contacto }}
+                        </th>
 
-                    </td>
+                        <th>
+                            Contacto
 
-                    <td>
-                        {{ user.compañia }}
+                        </th>
 
-                    </td>
+                        <th>
+                            Compañia
 
-                    <td>{{ user.direccion }}
+                        </th>
 
-                    </td>
+                        <th>
+                            Dirección
 
-                    <td>
-                        {{ user.suite }}
+                        </th>
 
-                    </td>
+                        <th>
+                            Suite
 
-                    <td>
-                        {{ user.calle }}
+                        </th>
 
-                    </td>
+                        <th>
+                            Calle
 
-                    <td>
-                        {{ user.ciudad }}
+                        </th>
 
-                    </td>
-                    <td>
-                        <button @click="removeUser(index)">Eliminar</button> 
-                    </td>
-                </tr>
+                        <th>
+                            Ciudad
 
-            </tbody>
+                        </th>
 
-        </table>
-  
+                        <th>
+                            Acciones
+
+                        </th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr v-for="(user, index) in users" :key="user.username">
+                        <td>
+                            {{ user.username }}
+
+                        </td>
+
+                        <td>
+                            {{ user.password }}
+
+                        </td>
+
+                        <td>
+
+                            {{ user.Contacto }}
+
+                        </td>
+
+
+                        <td>
+                            {{ user.compañia }}
+
+                        </td>
+
+                        <td>
+                            {{ user.direccion }}
+
+                        </td>
+
+                        <td>
+                            {{ user.suite }}
+
+
+                        </td>
+
+                        <td>
+                            {{ user.calle }}
+
+                        </td>
+
+                        <td>
+                            {{ user.ciudad }}
+
+
+                        </td>
+
+                        <td>
+
+                            <button @click="removeUser(index)">Eliminar</button>
+                        
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
     </div>
 
 </div>
 
+
 <script>
-    const app = Vue.createApp({
-        data() {
-            return {
+
+const app = Vue.createApp({
+    data() {
+        return {
+            username: '',
+            password: '',
+            error: '',
+            users: [],
+            myLogin: false,
+            showAddUserForm: false,
+            newUser: {
                 username: '',
                 password: '',
-                error: '',
-                users: [],
-                myLogin: false
+                Contacto: '',
+                compañia: '',
+                direccion: '',
+                suite: '',
+                calle: '',
+                ciudad: ''
+            },
+            showUserTable: true
+        };
+    },
+    methods: {
+
+        async login() {
+
+            try {
+                const response = await fetch('usuarios.json');
+                const userList = await response.json();
+                const foundUser = userList.find(singleUser => 
+                    singleUser.username === this.username && singleUser.password === this.password
+                );
+
+                if (foundUser) {
+
+                    sessionStorage.setItem('loggedUser', JSON.stringify(foundUser));
+                    this.users = userList; 
+                    this.myLogin = true; 
+                    this.error = '';
+                    
+                    alert('BIENVENIDO A RACCON CITY');
+                } else {
+
+                    this.error = 'INCORRECTO';
+                }
+            } catch (error) 
+            {
+                console.error('ERROR NO CARGA USUARIO:', error);
+                this.error = 'NO CARGA EL SISTEMA';
+            }
+        },
+
+        removeUser(index) {
+
+            this.users.splice(index, 1); 
+        },
+
+        addUser() {
+
+            this.users.push({ ...this.newUser });
+            this.cancelAddUser();
+        },
+
+        cancelAddUser() {
+
+            this.showAddUserForm = false;
+            this.newUser = {
+                username: '',
+                password: '',
+                Contacto: '',
+                compañia: '',
+                direccion: '',
+                suite: '',
+                calle: '',
+                ciudad: ''
             };
         },
-        methods: {
-            async login() {
-    try {
-        const response = await fetch('usuarios.json');
-        const userList = await response.json();
 
-        const foundUser = userList.find(singleUser => 
-            singleUser.username === this.username && singleUser.password === this.password
-        );
-
-        if (foundUser) {
-            sessionStorage.setItem('loggedUser', JSON.stringify(foundUser));
-            this.users = userList; 
-            this.myLogin = true; 
-            this.error = '';
-            alert('BIENVENIDO A RACCON CITY');
-        } else {
-            this.error = 'INCORRECTO';
-        }
-    } catch (error) {
-        console.error('ERROR NO CARGA USUARIO:', error);
-        this.error = 'NO CARGA EL SISTEMA';
-    }
-},
-
-removeUser(index) {
-    this.users.splice(index, 1); 
-},
-
-mounted() {
-    const storedUser = sessionStorage.getItem('loggedUser');
-    if (storedUser) {
-        this.myLogin = true;
-        this.users = JSON.parse(storedUser);
-    }
-}
-
+        mounted() {
+            const storedUser = sessionStorage.getItem('loggedUser');
+            if (storedUser) {
+                this.myLogin = true;
+                this.users = JSON.parse(storedUser);
             }
         }
-    );
+    }
+});
 
-    app.mount('#movil');
+app.mount('#movil');
 </script>
 
 <style>
-    table {
+    table { 
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
@@ -202,6 +293,14 @@ mounted() {
     }
     th {
         background-color: #000000;
+    }
+    form {
+        margin-top: 20px;
+    }
+    .button-container {
+        display: flex;
+        margin-bottom: 20px;
+        justify-content: space-between;
     }
 </style>
 
