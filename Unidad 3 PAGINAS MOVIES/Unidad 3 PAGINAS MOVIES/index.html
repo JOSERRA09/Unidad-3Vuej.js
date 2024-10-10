@@ -1,0 +1,132 @@
+<!DOCTYPE html>      
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('images.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .login-container {
+            background: rgba(241, 0, 0, 0.7);
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            backdrop-filter: blur(10px); 
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #fffb00;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        input {
+            margin: 15px 0;
+            padding: 12px 15px;
+            width: 100%;
+            border: 1px solid #ec0000fa; 
+            border-radius: 25px; 
+            background: rgba(255, 255, 255, 0.1); 
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #000000;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #ffffff;
+            color: #ff4b2b;
+            transform: scale(1.05); 
+        }
+
+        button:active {
+            transform: scale(1); 
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="login-container">
+        <h2>BIENVENIDO A MOVIES</h2>
+        <h2>Iniciar Sesión</h2>
+        <form @submit.prevent="login">
+            <input type="text" v-model="user" placeholder="Usuario" required>
+            <input type="password" v-model="pass" placeholder="Contraseña" required>
+            <button type="submit">Start</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                user: '',
+                pass: ''
+            };
+        },
+        methods: {
+            login() {
+                const validUser = "JOSERRA09";
+                const validPass = "1234";
+
+                if (this.user === validUser && this.pass === validPass) {
+                    console.log("Usuario correcto");
+                    document.body.classList.add('fade-out');
+                    setTimeout(() => {
+                        window.location.href = "movies.html";
+                    }, 500);
+                } else {
+                    alert("Usuario o contraseña incorrectos.");
+                }
+            }
+        }
+    }).mount('#app');
+</script>
+
+</body>
+</html>
