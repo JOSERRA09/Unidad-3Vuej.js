@@ -1,4 +1,4 @@
-<!DOCTYPE html>      
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -110,18 +110,43 @@
             };
         },
         methods: {
-            login() {
+            async login() {
+               
                 const validUser = "JOSERRA09";
                 const validPass = "1234";
 
                 if (this.user === validUser && this.pass === validPass) {
-                    console.log("Usuario correcto");
+                    console.log("Usuario correcto (validación local)");
                     document.body.classList.add('fade-out');
                     setTimeout(() => {
                         window.location.href = "movies.html";
                     }, 500);
-                } else {
-                    alert("Usuario o contraseña incorrectos.");
+                    return;
+                }
+
+                try {
+                    const response = await fetch('https://tu-api-endpoint.com/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username: this.user, password: this.pass })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        console.log("Usuario correcto (validación servidor)");
+                        document.body.classList.add('fade-out');
+                        setTimeout(() => {
+                            window.location.href = "movies.html";
+                        }, 500);
+                    } else {
+                        alert(data.message || "Usuario o contraseña incorrectos.");
+                    }
+                } catch (error) {
+                    console.error('Error en la solicitud:', error);
+                    alert("Ocurrió un error. Inténtalo de nuevo.");
                 }
             }
         }
@@ -130,3 +155,4 @@
 
 </body>
 </html>
+
